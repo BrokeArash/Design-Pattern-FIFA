@@ -11,6 +11,18 @@ public class GoalKeeperCard implements Card {
     private int kicking;
     private int speed;
 
+    public GoalKeeperCard(String name, String nationality, int diving, int handling,
+                          int reflex, int positioning, int kicking, int speed) {
+        this.name = name;
+        this.nationality = nationality;
+        this.diving = diving;
+        this.handling = handling;
+        this.reflex = reflex;
+        this.positioning = positioning;
+        this.kicking = kicking;
+        this.speed = speed;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,5 +53,11 @@ public class GoalKeeperCard implements Card {
 
     public int getSpeed() {
         return speed;
+    }
+
+    @Override
+    public int getPrice() {
+        int sum = (diving + handling + reflex + positioning + kicking + speed)/6;
+        return sum * 10_000_000;
     }
 }
