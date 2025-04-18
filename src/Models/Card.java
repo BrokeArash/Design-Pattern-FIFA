@@ -1,5 +1,7 @@
 package Models;
 
 public interface Card {
-    public int getPrice ();
+    public String getName();
+    public String getNationality();
+    public int getPrice();
 }

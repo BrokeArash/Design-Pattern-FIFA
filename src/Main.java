@@ -59,6 +59,68 @@ public class Main {
                     GoalKeeperCard goalKeeperCard = (GoalKeeperCard) goalKeeperCardBuilder.getCard();
                     Barcelona.getAvailableCards().add(goalKeeperCard);
                     break;
+                case Buy:
+                    Matcher buy = Regexes.Buy.getMatcher(input);
+                    String playerName = buy.group("playerName");
+                    Card card = null;
+                    for (Card card1 : Barcelona.getAvailableCards()) {
+                        if (card1.getName().equals(playerName)) {
+                            card = card1;
+                            break;
+                        }
+                    }
+
+                    if (card == null) {
+                        break;
+                    } else if (Barcelona.getMoney() < card.getPrice()) {
+                        System.out.println("8 - 2 ");
+                        break;
+                    }
+
+                    Barcelona.spendMoney(card.getPrice());
+                    Barcelona.getTeamPlayers().add(card);
+                    Barcelona.getAvailableCards().remove(card);
+                    break;
+                case Sell:
+                    Matcher sell = Regexes.Sell.getMatcher(input);
+                    playerName = sell.group("playerName");
+                    card = null;
+                    for (Card card1 : Barcelona.getTeamPlayers()) {
+                        if (card1.getName().equals(playerName)) {
+                            card = card1;
+                            break;
+                        }
+                    }
+
+                    if (card == null) {
+                        break;
+                    }
+                    Barcelona.spendMoney(-(card.getPrice()/2));
+                    Barcelona.getTeamPlayers().remove(card);
+                    Barcelona.getAvailableCards().add(card);
+                    break;
+                case Select:
+                    Matcher select = Regexes.Select.getMatcher(input);
+                    String position = select.group("position");
+                    playerName = select.group("playerName");
+                    card = null;
+                    for (Card card1 : Barcelona.getTeamPlayers()) {
+                        if (card1.getName().equals(playerName)) {
+                            card = card1;
+                            break;
+                        }
+                    }
+
+                    if (card == null) {
+                        break;
+                    } else if (position.equals("gk")) {
+                        Barcelona.changeGoalie((GoalKeeperCard) card);
+                    } else if (position.equals("cb")) {
+                        Barcelona.changeDefender((PlayerCard) card);
+                    } else {
+                        Barcelona.changeStriker((PlayerCard) card);
+                    }
+
 
             }
         }
