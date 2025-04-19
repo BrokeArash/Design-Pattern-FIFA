@@ -1,6 +1,8 @@
 package Models;
 
-public class PlayerCard implements Card {
+import Strategies.PlayStyle;
+
+public class PlayerCard implements PlayerInterface {
     private final String name;
     private final String nationality;
     private final int shooting;

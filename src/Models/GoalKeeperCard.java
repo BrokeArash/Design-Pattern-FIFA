@@ -1,6 +1,6 @@
 package Models;
 
-public class GoalKeeperCard implements Card {
+public class GoalKeeperCard implements GoalKeeperInterface {
 
     private String name;
     private String nationality;
