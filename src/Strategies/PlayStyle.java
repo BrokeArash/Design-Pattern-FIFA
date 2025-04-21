@@ -1,5 +1,7 @@
 package Strategies;
 
 public interface PlayStyle {
-    public void setPlayStyle();
+    int getOverall();
+    int getPrice();
+    String getName();
 }

@@ -1,6 +1,5 @@
 package Decorators.GoalKeeperCardDecorators;
 
-import Models.GoalKeeperCard;
 import Models.GoalKeeperInterface;
 
 public class IconGoalKeeperCardDecorator implements GoalKeeperCardDecorator {
@@ -55,5 +54,10 @@ public class IconGoalKeeperCardDecorator implements GoalKeeperCardDecorator {
     @Override
     public int getSpeed() {
         return card.getSpeed() + 5;
+    }
+
+    @Override
+    public int getOverall() {
+        return (getDiving() + getHandling() + getReflex() + getPositioning() + getKicking() + getSpeed())/6;
     }
 }

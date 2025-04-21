@@ -1,17 +1,19 @@
 package Models;
 
 public interface GoalKeeperInterface extends Card{
-    public int getDiving();
+    int getDiving();
 
-    public int getHandling();
+    int getHandling();
 
-    public int getReflex();
+    int getReflex();
 
-    public int getPositioning();
+    int getPositioning();
 
-    public int getKicking();
+    int getKicking();
 
-    public int getSpeed();
+    int getSpeed();
+
+    int getOverall();
 
 
 }

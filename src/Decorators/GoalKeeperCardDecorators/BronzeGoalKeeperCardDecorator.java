@@ -55,4 +55,9 @@ public class BronzeGoalKeeperCardDecorator implements GoalKeeperCardDecorator {
     public int getSpeed() {
         return card.getSpeed() + 2;
     }
+
+    @Override
+    public int getOverall() {
+        return (getDiving() + getHandling() + getReflex() + getPositioning() + getKicking() + getSpeed())/6;
+    }
 }

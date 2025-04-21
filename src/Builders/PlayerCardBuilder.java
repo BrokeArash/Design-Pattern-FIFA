@@ -1,6 +1,5 @@
 package Builders;
 
-import Models.Card;
 import Models.PlayerCard;
 
 public class PlayerCardBuilder implements Builder {
@@ -38,6 +37,7 @@ public class PlayerCardBuilder implements Builder {
         this.defending = defending;
     }
 
+
     @Override
     public void setName(String name) {
         this.name = name;
@@ -50,6 +50,7 @@ public class PlayerCardBuilder implements Builder {
 
     @Override
     public PlayerCard getCard() {
-        return new PlayerCard(name, nationality, shooting, pace, dribbling, physic, passing, defending);
+        return new PlayerCard(name, nationality, shooting, pace, dribbling,
+                physic, passing, defending);
     }
 }

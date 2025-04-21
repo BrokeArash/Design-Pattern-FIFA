@@ -1,12 +1,8 @@
 package Directors;
 
-import Builders.Builder;
 import Builders.GoalKeeperCardBuilder;
 import Builders.PlayerCardBuilder;
-import Models.Card;
-import Models.GoalieData;
-import Models.PlayerCard;
-import Models.PlayerData;
+import Models.*;
 
 public class Director {
 

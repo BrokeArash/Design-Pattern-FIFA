@@ -1,21 +1,20 @@
 package Decorators.GoalKeeperCardDecorators;
 
-import Models.Card;
 import Models.GoalKeeperInterface;
 
 public interface GoalKeeperCardDecorator extends GoalKeeperInterface {
 
-    public int getPrice();
+    int getPrice();
 
-    public int getDiving();
+    int getDiving();
 
-    public int getHandling();
+    int getHandling();
 
-    public int getReflex();
+    int getReflex();
 
-    public int getPositioning();
+    int getPositioning();
 
-    public int getKicking();
+    int getKicking();
 
-    public int getSpeed();
+    int getSpeed();
 }

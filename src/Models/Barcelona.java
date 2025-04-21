@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Barcelona {
     private static int money = 1_000_000_000;
+    private static int overall = 0;
     private static PlayerInterface striker;
     private static PlayerInterface defender;
     private static GoalKeeperInterface goalie;
@@ -48,5 +49,13 @@ public class Barcelona {
 
     public static ArrayList<Card> getTeamPlayers() {
         return teamPlayers;
+    }
+
+    public static int getOverall() {
+        return overall;
+    }
+
+    public static void setOverall(int overall) {
+        Barcelona.overall = overall;
     }
 }

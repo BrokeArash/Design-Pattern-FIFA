@@ -7,19 +7,19 @@ import Strategies.PlayStyle;
 
 public interface PlayerCardDecorator extends PlayerInterface {
 
-    public int getPrice();
+    int getPrice();
 
-    public int getShooting();
+    int getShooting();
 
-    public int getPace();
+    int getPace();
 
-    public int getDribbling();
+    int getDribbling();
 
-    public int getPhysic();
+    int getPhysic();
 
-    public int getPassing();
+    int getPassing();
 
-    public int getDefending();
+    int getDefending();
 
 
 

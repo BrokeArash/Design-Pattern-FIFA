@@ -1,12 +1,13 @@
-import Builders.Builder;
 import Builders.GoalKeeperCardBuilder;
 import Builders.PlayerCardBuilder;
 import Decorators.GoalKeeperCardDecorators.*;
 import Decorators.PlayerDecorators.*;
 import Directors.Director;
 import Models.*;
+import Strategies.AggressiveStrategy;
+import Strategies.BalancedStrategy;
+import Strategies.DefensiveStrategy;
 import Strategies.PlayStyle;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 
@@ -16,7 +17,6 @@ public class Main {
 
         Card card;
         while (true) {
-            System.out.println(Barcelona.getMoney());
             String input = scanner.nextLine();
             Regexes matchedCommand = null;
             for (Regexes command : Regexes.values()) {
@@ -30,7 +30,7 @@ public class Main {
             Director director = new Director();
 
             if (matchedCommand == null) {
-                System.out.println("kir");
+                System.out.println();
             } else {
                 switch (matchedCommand) {
 
@@ -138,32 +138,134 @@ public class Main {
                         position = setDecoration.group("position");
                         String decoration = setDecoration.group("decoration");
                         card = null;
-                        if (position.equals("gk")) {
-                            card = Barcelona.getGoalie();
-                            card = decorateGoalKeeper((GoalKeeperInterface) card, decoration);
-                            Barcelona.changeGoalie((GoalKeeperInterface) card);
-                        } else if (position.equals("cb")) {
-                            card = Barcelona.getDefender();
-                            card = decoratePlayer((PlayerInterface) card, decoration);
-                            Barcelona.changeDefender((PlayerInterface) card);
-                        } else if (position.equals("st")) {
-                            card = Barcelona.getStriker();
-                            System.out.println(((PlayerInterface) card).getDefending());
-                            card = decoratePlayer((PlayerInterface) card, decoration);
-                            System.out.println(((PlayerInterface) card).getDefending());
-                            Barcelona.changeStriker((PlayerInterface) card);
+                        switch (position) {
+                            case "gk" -> {
+                                card = Barcelona.getGoalie();
+                                card = decorateGoalKeeper((GoalKeeperInterface) card, decoration);
+                                Barcelona.changeGoalie((GoalKeeperInterface) card);
+                            }
+                            case "cb" -> {
+                                card = Barcelona.getDefender();
+                                card = decoratePlayer((PlayerInterface) card, decoration);
+                                Barcelona.changeDefender((PlayerInterface) card);
+                            }
+                            case "st" -> {
+                                card = Barcelona.getStriker();
+                                card = decoratePlayer((PlayerInterface) card, decoration);
+                                Barcelona.changeStriker((PlayerInterface) card);
+                            }
                         }
                         Barcelona.spendMoney(card.getPrice());
                         break;
-                    case Soot:
+                    case SetPlayStyle:
+                        Matcher setPlayStyle = Regexes.SetPlayStyle.getMatcher(input);
+                        position = setPlayStyle.group("position");
+                        String playStyle = setPlayStyle.group("style");
+                        if (position.equals("st")) {
+                            PlayerInterface thisCard = Barcelona.getStriker();
+                            setStrategy(playStyle, thisCard);
+                        } else if (position.equals("cb")) {
+                            PlayerInterface thisCard = Barcelona.getDefender();
+                            setStrategy(playStyle, thisCard);
+                        } else {
+                            break;
+                        }
+                        break;
+                    case ShowLineup:
+                        try {
+                            System.out.print("striker: " +
+                                    Barcelona.getStriker().getName() + " " +
+                                    Barcelona.getStriker().getNationality() + " " +
+                                    Barcelona.getStriker().getShooting() + " " +
+                                    Barcelona.getStriker().getPace() + " " +
+                                    Barcelona.getStriker().getDribbling() + " " +
+                                    Barcelona.getStriker().getPhysic() + " " +
+                                    Barcelona.getStriker().getPassing() + " " +
+                                    Barcelona.getStriker().getDefending() + " ");
+                            System.out.println(Barcelona.getStriker().getStyle().getName());
+                        } catch (Exception error) {
+                            System.out.println("striker: ");
+                        }
+                        try {
+                            System.out.println("center back: " +
+                                    Barcelona.getDefender().getName() + " " +
+                                    Barcelona.getDefender().getNationality() + " " +
+                                    Barcelona.getDefender().getShooting() + " " +
+                                    Barcelona.getDefender().getPace() + " " +
+                                    Barcelona.getDefender().getDribbling() + " " +
+                                    Barcelona.getDefender().getPhysic() + " " +
+                                    Barcelona.getDefender().getPassing() + " " +
+                                    Barcelona.getDefender().getDefending() + " " +
+                                    Barcelona.getDefender().getStyle().getName());
+                        } catch (Exception error) {
+                            System.out.println("center back: ");
+                        }
+                        try {
+                            System.out.println("goal keeper: " +
+                                    Barcelona.getGoalie().getName() + " " +
+                                    Barcelona.getGoalie().getNationality() + " " +
+                                    Barcelona.getGoalie().getDiving() + " " +
+                                    Barcelona.getGoalie().getHandling() + " " +
+                                    Barcelona.getGoalie().getReflex() + " " +
+                                    Barcelona.getGoalie().getPositioning() + " " +
+                                    Barcelona.getGoalie().getKicking() + " " +
+                                    Barcelona.getGoalie().getSpeed());
+                        } catch (Exception error) {
+                            System.out.println("goal keeper: ");
+                        }
+                        break;
+                    case ShowMoney:
+                        System.out.println(Barcelona.getMoney());
+                        break;
+                    case CalculateTeamPower:
+                        PlayerInterface st = Barcelona.getStriker();
+                        PlayerInterface cb = Barcelona.getDefender();
+                        GoalKeeperInterface gk = Barcelona.getGoalie();
+                        int stOverall = 0;
+                        int cbOverall = 0;
+                        int gkOverall = 0;
+                        try {
+                            stOverall = st.getOverall();
+                        } catch (Exception ignored) {}
+                        try {
+                            cbOverall = cb.getOverall();
+                        } catch (Exception ignored) {}
+                        try {
+                            gkOverall = gk.getOverall();
+                        } catch (Exception ignored){}
+                        int sum = (stOverall + cbOverall + gkOverall)/3;
 
+                        Barcelona.setOverall(sum);
+                        System.out.println(sum);
+                        break;
+                    case Soot:
+                        if (Barcelona.getOverall() > 90) {
+                            System.out.println("Visca Barca");
+                        } else if (Barcelona.getOverall() == 90) {
+                            System.out.println("draw");
+                        } else {
+                            System.out.println("Hala Madrid");
+                        }
+                        System.exit(0);
                 }
             }
-
-
         }
+    }
 
-
+    private static void setStrategy(String playStyle, PlayerInterface thisCard) {
+        if (playStyle.equals("aggressive")) {
+            PlayStyle aggressiveStrategy = new AggressiveStrategy(thisCard);
+            thisCard.setStyle(aggressiveStrategy);
+            Barcelona.spendMoney(aggressiveStrategy.getPrice());
+        } else if (playStyle.equals("defensive")) {
+            PlayStyle defensiveStrategy = new DefensiveStrategy(thisCard);
+            thisCard.setStyle(defensiveStrategy);
+            Barcelona.spendMoney(defensiveStrategy.getPrice());
+        } else {
+            PlayStyle balancedStrategy = new BalancedStrategy(thisCard);
+            thisCard.setStyle(balancedStrategy);
+            Barcelona.spendMoney(balancedStrategy.getPrice());
+        }
     }
 
     private static PlayerInterface decoratePlayer(PlayerInterface card, String decoration) {

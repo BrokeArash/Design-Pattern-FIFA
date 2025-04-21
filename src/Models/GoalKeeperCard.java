@@ -56,6 +56,11 @@ public class GoalKeeperCard implements GoalKeeperInterface {
     }
 
     @Override
+    public int getOverall() {
+        return (diving + handling + reflex + positioning + kicking + speed)/6;
+    }
+
+    @Override
     public int getPrice() {
         int sum = (diving + handling + reflex + positioning + kicking + speed)/6;
         return sum * 10_000_000;

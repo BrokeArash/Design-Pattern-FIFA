@@ -1,16 +1,25 @@
 package Models;
 
+import Strategies.PlayStyle;
+
 public interface PlayerInterface extends Card{
-    public int getShooting();
 
-    public int getPace();
+    int getShooting();
 
-    public int getDribbling();
+    int getPace();
 
-    public int getPhysic();
+    int getDribbling();
 
-    public int getPassing();
+    int getPhysic();
 
-    public int getDefending();
+    int getPassing();
+
+    int getDefending();
+
+    int getOverall();
+
+    PlayStyle getStyle();
+
+    void setStyle(PlayStyle style);
 
 }
